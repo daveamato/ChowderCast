@@ -30,7 +30,7 @@
     ws.onmessage = function (event) {
         var j = JSON.parse(event.data);
 
-        if (j && j.result.length && j.id.length) {
+        if (j && j.result && j.id) {
 
             switch (j.id) {
                 case "Player.GetActivePlayers":
