@@ -1,0 +1,122 @@
+body {
+    background-color: #eee;
+}
+
+.status-fail {
+    background-color: red;
+    color: #fff !important;
+}
+
+.status-online {
+    background-color: green;
+    color: #fff !important;
+}
+
+.status-offline {
+    background-color: orange;
+    color: #444 !important;
+}
+
+.status {
+    position: fixed;
+    top: 14px;
+    right: 12px;
+    border-radius: 16px;
+    min-width: 50px;
+    height: 25px;
+    text-align: center;
+    font-weight: 700 !important;
+    font-size: 1em;
+    z-index: 99999;
+    padding: 2px 10px;
+}
+
+.input-group-btn {
+    vertical-align: bottom !important;
+}
+
+.player-buttons {
+    padding-top: 15px;
+    padding-bottom: 10px;
+
+}
+
+#trackpad {
+    background: silver;
+    min-height: 100px;
+    width: 70%;
+    text-align: center;
+    margin: 0 auto;
+    font-variant: small-caps;
+    font-size: 2em;
+    line-height: 50px;
+    border-style: double;
+    border-color: #eee;
+    border-width: 4.4px;
+    margin-top: 2%;
+}
+
+#hide {
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: 100;
+}
+
+#hide:hover {
+    color: #444;
+}
+
+header h3 {
+    display: inline-block;
+}
+
+.well {
+    margin-bottom: 10px !important;
+}
+
+.success {
+    -webkit-animation: pulse .5s ease-in-out 2 alternate;
+    animation: pulse .5s ease-in-out 2 alternate;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        background: initial;
+        border-color: initial;
+    }
+
+    50% {
+        background: #00B800;
+        border-color: #00B800;
+    }
+
+    100% {
+        background: initial;
+        border-color: initial;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        background: initial;
+        border-color: initial;
+    }
+
+    50% {
+        background: #00B800;
+        border-color: #00B800;
+    }
+
+    100% {
+        background: initial;
+        border-color: initial;
+    }
+}
+
+.nav-pills a {
+    border-radius: 0 !important;
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 1.1em;
+    line-height: .5em;
+}
