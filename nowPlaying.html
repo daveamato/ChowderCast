@@ -1,88 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XBMC Websockets</title> 
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-<style>
-p > span {
-	margin-right: 5px;
-	font-weight:bold;
-}
-pre {
-	overflow:auto;
-	word-wrap:break-word;
-}
-</style>
+    <title>XBMC Websockets</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <style>
+        p > span {
+            margin-right: 5px;
+            font-weight: bold;
+        }
+
+        pre {
+            overflow: auto;
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
 <script language="javascript" type="text/javascript">
-  var ws = new WebSocket('ws://192.168.1.99:9090/jsonrpc');
-  ws.onopen = function (event) {
-  	send_message("Player.GetActivePlayers");
-  }
-	
-	ws.onerror = function (event) {
-		alert("Error: " + event.data);
-	}
-	
-  ws.onmessage = function (event) {
-  	var j = JSON.parse(event.data);
-  	
-  	if (j.id) {
-  		switch(j.id) {
-  			case "Player.GetActivePlayers":
-  				var r = j.result[0];
-  				if (r.type == 'video') {
-  					send_message("Player.GetItem", {
-  						"properties": ["file", "streamdetails"], 
-  						"playerid": r.playerid,
-  					});
-  				}
-  				break;
-  			case "Player.GetItem":
-					var r = j.result.item;
-					document.getElementById("name").innerHTML = "<h1>VIDEO PLAYING</h1><p><span>Name: </span>" + r.label + "</p>";
-					document.getElementById("file").innerHTML = "<p><span>File: </span>" + r.file + "</p>";
-					var v = r.streamdetails.video[0];
-					document.getElementById("details").innerHTML = "<pre>" + JSON.stringify(r) + "</pre>";
-					console.log("details: ", v);
-					//document.getElementById("details").innerHTML = v.width + 'x' + v.height + ', ' + v.duration + 's';
-					break;
-				default:
-					alert(event.data);
-			}
-		} else {
-			switch(j.method) {
-				case "Player.OnPlay":
-					send_message("Player.GetActivePlayers");
-					break;
-				case "Player.OnStop":
-					document.getElementById("name").innerHTML = "<h1>VIDEO STOPPED</h1>";
-					document.getElementById("file").innerHTML = "";
-					document.getElementById("details").innerHTML = "";
-					break;
-				case "Player.OnPause":
-					document.getElementById("name").innerHTML = "<h1>VIDEO PAUSED</h1>";
-					document.getElementById("file").innerHTML = "";
-					document.getElementById("details").innerHTML = "";
+    var ws = new WebSocket('ws://192.168.1.99:9090/jsonrpc');
+    ws.onopen = function (event) {
+        send_message("Player.GetActivePlayers");
+    }
 
-				default:
-					console.log("EVENT: ",event.data);
-			}
-		}
-	}
-	
-	function send_message(method, params) {
-		var msg = {
-			"jsonrpc": "2.0", 
-			"method": method,
-			"id": method
-		};
-		
-		if (params) { msg.params = params; }
-		ws.send(JSON.stringify(msg));
-	}
+    ws.onerror = function (event) {
+        alert("Error: " + event.data);
+    }
+
+    ws.onmessage = function (event) {
+        var j = JSON.parse(event.data);
+
+        if (j.id) {
+            switch (j.id) {
+                case "Player.GetActivePlayers":
+                    var r = j.result[0];
+                    if (r.type == 'video') {
+                        send_message("Player.GetItem", {
+                            "properties": ["file", "streamdetails"],
+                            "playerid": r.playerid,
+                        });
+                    }
+                    break;
+                case "Player.GetItem":
+                    var r = j.result.item;
+                    document.getElementById("name").innerHTML = "<h1>VIDEO PLAYING</h1><p><span>Name: </span>" + r.label + "</p>";
+                    document.getElementById("file").innerHTML = "<p><span>File: </span>" + r.file + "</p>";
+                    var v = r.streamdetails.video[0];
+                    document.getElementById("details").innerHTML = "<pre>" + JSON.stringify(r) + "</pre>";
+                    console.log("details: ", v);
+                    //document.getElementById("details").innerHTML = v.width + 'x' + v.height + ', ' + v.duration + 's';
+                    break;
+                default:
+                    alert(event.data);
+            }
+        } else {
+            switch (j.method) {
+                case "Player.OnPlay":
+                    send_message("Player.GetActivePlayers");
+                    break;
+                case "Player.OnStop":
+                    document.getElementById("name").innerHTML = "<h1>VIDEO STOPPED</h1>";
+                    document.getElementById("file").innerHTML = "";
+                    document.getElementById("details").innerHTML = "";
+                    break;
+                case "Player.OnPause":
+                    document.getElementById("name").innerHTML = "<h1>VIDEO PAUSED</h1>";
+                    document.getElementById("file").innerHTML = "";
+                    document.getElementById("details").innerHTML = "";
+
+                default:
+                    console.log("EVENT: ", event.data);
+            }
+        }
+    }
+
+    function send_message(method, params) {
+        var msg = {
+            "jsonrpc": "2.0",
+            "method": method,
+            "id": method
+        };
+
+        if (params) {
+            msg.params = params;
+        }
+        ws.send(JSON.stringify(msg));
+    }
 </script>
 <h1>websockets demo</h1>
 <div id="name"></div>
