@@ -34,7 +34,7 @@
             switch (j.id) {
                 case "Player.GetActivePlayers":
                     var r = j.result[0];
-                    if (r.type == 'video') {
+                    if (r["type"] == 'video') {
                         send_message("Player.GetItem", {
                             "properties": ["file", "streamdetails"],
                             "playerid": r.playerid,
