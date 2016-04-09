@@ -164,9 +164,6 @@ Xbmc.WebSocketsApi = function(options) {
 	 * @private
 	 */
 	function _onWsClose() {
-		if (_monitorTimer) {
-			_monitorTimer = clearInterval(_monitorTimer);
-		}
 		_connected = false;
 		if (_isRetry === false) {
 			_onDisconnected();
