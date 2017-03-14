@@ -4,7 +4,7 @@
 /* global Hammer */
 var chowder = {}, c,
 	onlineStatus = false,
-	defaulthost = '192.168.1.105',
+	defaulthost = '192.168.1.115',
 	nowPlayingData = {}, systemEventData = {},
 	trackpadListener, mouse = new Mousetrap();
 var is_touch_device = 'ontouchstart' in document.documentElement;
