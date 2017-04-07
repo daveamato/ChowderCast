@@ -31,6 +31,25 @@ $(document).ready(function () {
 
 
 chowder = {
+	settings: {
+		save: function () {
+			dumpToConsole("saving...");
+			var newVal = $("#hostname").val();
+			chowder.setStatus("offline", "status-offline");
+			if (newVal.length < 2) {
+				alert("new hostname not valid!");
+				return false;
+			} else {
+				chowder.setHostname(newVal);
+				chowder.init();
+			}
+		},
+		load: function () {
+			var h = chowder.getHostname();
+			$("#hostname").val(h);
+			chowder.setHostname(h);
+		}
+	},
 	send_msg: function (method, params) {
 		if (!window.c||!window.c.call) { return false; }
 		var msg = {
@@ -67,7 +86,7 @@ chowder = {
 				bindings();
 				dumpToConsole("using host: ", chowder.getHostname());
 			},
-			onError: function () {
+			onFail: function () {
 				window.dumpToConsole('XBMC Fail');
 				onlineStatus = false;
 				chowder.setStatus("failed", "status-fail");
@@ -88,19 +107,19 @@ chowder = {
 	},
 	bindListeners: function() {
 		c.subscribe('Player.OnPlay', function(data) {
-			chowder.send_msg('Player.GetActivePlayers');
+			console.log("Playing", data||{});
 		});
-		/*
+		
 		c.subscribe('Player.OnStop', function(data) {
-			console.log("Stopped");
+			console.log("Stopped", data||{});;
 		});
-		*/
+		
 		c.subscribe('Player.OnPause', function(data) {
 			console.log("Paused", data||{});
 		});
 
 		c.subscribe('Player.GetActivePlayers', function(data) {
-			console.log("Player.GetActivePlayers", data);
+			console.log("Got Active Players", data);
 			var r = data.result[0];
 			if (r.type = 'video') {
 				chowder.send_msg('Player.GetItem', {
@@ -112,10 +131,12 @@ chowder = {
 		});
 		
 		c.subscribe('Player.GetItem', function(data) {
+			console.log("GotItem", data||{});
 			var r = data.result.item;
-			console.log("Playing Video", r.label);
-			console.log("File", r.file);
-			dumpToConsole("streamdetails: " + r.streamdetails.video[0]);
+			/*console.log("Playing Video", r.label);
+			console.log("File", r.file);*/
+
+			console.log("streamdetails: " + data.result.item.streamdetails.video[0]);
 		});
 	},
 	bindInputEvents: function() {
@@ -214,25 +235,6 @@ chowder = {
 			});
 			dumpToConsole("trackpad bindings successfull");
 		}
-	}
-};
-chowder.settings = {
-	save: function () {
-		dumpToConsole("saving...");
-		var newVal = $("#hostname").val();
-		chowder.setStatus("offline", "status-offline");
-		if (newVal.length < 2) {
-			alert("new hostname not valid!");
-			return false;
-		} else {
-			chowder.setHostname(newVal);
-			chowder.init();
-		}
-	},
-	load: function () {
-		var h = chowder.getHostname();
-		$("#hostname").val(h);
-		chowder.setHostname(h);
 	}
 };
 /*		EVENTS 		*/
