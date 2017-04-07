@@ -1,81 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>ChowderCast</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-  <meta name="description" content="Kodi XBMC Media Center Utility">
-  <meta name="author" content="David Amato">
-	<meta name="theme-color" content="#ffffff">
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-  
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
 
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!--[if lt IE 9]>
+<head>
+    <meta charset="utf-8">
+    <title>ChowderCast</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta name="description" content="Kodi Media Center Utility">
+    <meta name="author" content="David Amato">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
   <![endif]-->
-  
-	<script src="http://code.jquery.com/jquery.min.js"></script>
-	<script src="js/XbmcWebSocketsApi.js"></script>
-	<script src="js/XbmcHttpApi.js"></script>
-	<script src="js/XbmcCachedQueryController.js"></script>
-	<script src="js/XbmcController.js"></script>
-	<script src="js/tabs.js"></script>
-	<script src="js/mousetrap.min.js"></script>
-	<script src="js/hammer.min.js"></script>
-	<script src="js/scripts.js"></script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="js/XbmcWebSocketsApi.js"></script>
+    <script src="js/XbmcHttpApi.js"></script>
+    <script src="js/XbmcCachedQueryController.js"></script>
+    <script src="js/XbmcController.js"></script>
+    <script src="js/tabs.js"></script>
+    <script src="js/mousetrap.min.js"></script>
+    <script src="js/hammer.min.js"></script>
+    <script src="js/scripts.js"></script>
 </head>
 
 <body>
-<div class="container-fluid">
-  <p class="status status-offline">offline</p>
-  <header>
-    <h3 class="text-muted">chowdercast</h3>
-  </header>
-	<div class="row">
-		<div class="col-xs-12">
-			<ul class="nav nav-pills" role="tablist" id="myTab">
-			  <li role="presentation" class="active"><a href="#nowplaying" aria-controls="nowplaying" role="tab" data-toggle="tab">Player</a></li>
-			  <li role="presentation" id="remoteTab"><a href="#remote" aria-controls="remote" role="tab" data-toggle="tab">Remote</a></li>
-			  <li role="presentation" class="hidden"><a href="#cast" aria-controls="cast" role="tab" data-toggle="tab">Cast</a></li>
-			  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-			</ul>
-
-			<div class="tab-content">
-			  <div role="tabpanel" class="tab-pane active" id="nowplaying">
-			  	<div class="text-center player-buttons">
-  			  	<div class="btn-group btn-group-lg">
-			  			<button class="btn btn-default stepBack" type="button"><i class="fa fa-undo fa-2x"></i></button>
-  	  	    	 <button class="btn btn-danger stopButton" type="button"><i class="fa fa-stop fa-2x"></i></button> <button class="btn btn-success playButton" type="button"><i class="fa fa-play fa-2x"></i><i class="fa fa-pause fa-2x"></i></button><button class="btn btn-default stepForward" type="button"><i class="fa fa-repeat fa-2x"></i></button>
-  	  	    </div>
-			  	</div>
-					<div class="form-group">
-					  <div class="input-group col-md-6 col-md-push-3">
-						  <input id="castUrl" name="castUrl" class="form-control" placeholder="URL" type="text">
-						  <span class="input-group-btn"> <button id="castButton" class="btn btn-warning" type="button">CAST <i id="castStatus" class="fa fa-play"></i></button></span>
-	          </div>
-					</div>
-			  	<div class="well well-sm clearfix text-center">
-			  		<button class="btn btn-default homeButton pull-left" type="button"><i class="fa fa-home fa-2x"></i></button>
-			  		<button class="btn btn-default infoButton" type="button"><i class="fa fa-info fa-2x"></i></button>
-			  		<button class="btn btn-default fullscreenButton pull-right" type="button"><i class="fa fa-arrows-alt fa-2x"></i></button>
-			  		</div>
-			  </div>
-			  <div role="tabpanel" class="tab-pane" id="remote">
-			  	<form role="form" id="remoteForm">
-  			  	<div id="trackpad" class="well well-lg text-center text-muted">
-  			  		<span>Remote Control</span>
-  			  	</div>
-			  	</form>
-			  </div>
-			  <!--
+    <div class="container-fluid">
+        <p class="status status-offline">offline</p>
+        <header>
+            <h3 class="text-muted">chowdercast</h3>
+        </header>
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="nav nav-pills" role="tablist" id="myTab">
+                    <li role="presentation" class="active"><a href="#nowplaying" aria-controls="nowplaying" role="tab" data-toggle="tab">Player</a></li>
+                    <li role="presentation" id="remoteTab"><a href="#remote" aria-controls="remote" role="tab" data-toggle="tab">Remote</a></li>
+                    <li role="presentation" class="hidden"><a href="#cast" aria-controls="cast" role="tab" data-toggle="tab">Cast</a></li>
+                    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="nowplaying">
+                        <div class="text-center player-buttons">
+                            <div class="btn-group btn-group-lg">
+                                <button class="btn btn-default stepBack" type="button"><i class="fa fa-undo fa-2x"></i></button>
+                                <button class="btn btn-danger stopButton" type="button"><i class="fa fa-stop fa-2x"></i></button>
+                                <button class="btn btn-success playButton" type="button"><i class="fa fa-play fa-2x"></i><i class="fa fa-pause fa-2x"></i></button>
+                                <button class="btn btn-default stepForward" type="button"><i class="fa fa-repeat fa-2x"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group col-md-6 col-md-push-3">
+                                <input id="castUrl" name="castUrl" class="form-control" placeholder="URL" type="text">
+                                <span class="input-group-btn"> <button id="castButton" class="btn btn-warning" type="button">CAST <i id="castStatus" class="fa fa-play"></i></button></span>
+                            </div>
+                        </div>
+                        <div class="well well-sm clearfix text-center">
+                            <button class="btn btn-default homeButton pull-left" type="button"><i class="fa fa-home fa-2x"></i></button>
+                            <button class="btn btn-default infoButton" type="button"><i class="fa fa-info fa-2x"></i></button>
+                            <button class="btn btn-default fullscreenButton pull-right" type="button"><i class="fa fa-arrows-alt fa-2x"></i></button>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="remote">
+                        <form role="form" id="remoteForm">
+                            <div id="trackpad" class="well well-lg text-center text-muted">
+                                <span>Remote Control</span>
+                            </div>
+                        </form>
+                    </div>
+                    <!--
 			  <div role="tabpanel" class="tab-panes" id="cast">
 					<form role="form" class="form-horizontal">
 						<div class="form-group">
@@ -93,23 +92,24 @@
 					</form>
 			  </div>
 			  -->
-			  <div role="tabpanel" class="tab-pane" id="settings">
-			  	<form role="form" id="connectionForm">
-			  		<div class="form-group">
-			  		  <div class="input-group well">
-			  		  	<p>connection info</p>
-			  		    <input type="text" placeholder="user:pass@hostname" class="form-control" id="hostname">
-			  		    <span class="input-group-btn">
-			  		      <button id="saveButton" class="btn btn-success" type="button">SAVE</button>
-			  		      <button id="resetButton" class="btn btn-danger" type="button">RESET</button>
-			  		    </span>
-			  		  </div>
-			  		</div>			
-			  	</form>
-			  </div>
-			</div>
-		</div>
-	</div>
-</div>
+                    <div role="tabpanel" class="tab-pane" id="settings">
+                        <form role="form" id="connectionForm">
+                            <div class="form-group">
+                                <div class="input-group well">
+                                    <p>connection info</p>
+                                    <input type="text" placeholder="user:pass@hostname" class="form-control" id="hostname">
+                                    <div class="input-group-btn">
+			  		      				<button id="saveButton" class="btn btn-success" type="button">SAVE</button>
+			  		      				<button id="resetButton" class="btn btn-danger" type="button">RESET</button>
+			  		    			</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

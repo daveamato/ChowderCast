@@ -67,7 +67,7 @@ chowder = {
 				bindings();
 				dumpToConsole("using host: ", chowder.getHostname());
 			},
-			onFail: function () {
+			onError: function () {
 				window.dumpToConsole('XBMC Fail');
 				onlineStatus = false;
 				chowder.setStatus("failed", "status-fail");
@@ -87,10 +87,16 @@ chowder = {
 		});
 	},
 	bindListeners: function() {
-		
 		c.subscribe('Player.OnPlay', function(data) {
 			chowder.send_msg('Player.GetActivePlayers');
-			
+		});
+		/*
+		c.subscribe('Player.OnStop', function(data) {
+			console.log("Stopped");
+		});
+		*/
+		c.subscribe('Player.OnPause', function(data) {
+			console.log("Paused", data||{});
 		});
 
 		c.subscribe('Player.GetActivePlayers', function(data) {
@@ -101,6 +107,7 @@ chowder = {
 					"properties": ["file", "streamdetails"],
 					"playerid": r.playerid,
 				});
+				console.log("Playing: ", r);
 			}
 		});
 		
@@ -108,16 +115,7 @@ chowder = {
 			var r = data.result.item;
 			console.log("Playing Video", r.label);
 			console.log("File", r.file);
-			//var v = r.streamdetails.video[0];
-		});
-		
-		/*
-		c.subscribe('Player.OnStop', function(data) {
-			console.log("Stopped");
-		});
-		*/
-		c.subscribe('Player.OnPause', function(data) {
-			console.log("Paused", data||{});
+			dumpToConsole("streamdetails: " + r.streamdetails.video[0]);
 		});
 	},
 	bindInputEvents: function() {
@@ -178,6 +176,7 @@ chowder = {
 			mouse.bind('i', function () { c.Input.Info(); });
 			mouse.bind('c', function () { c.Input.ContextMenu(); });
 			mouse.bind('o', function () { c.Input.ShowOSD(); });
+			mouse.bind('p', function () { c.Input.ShowCodec(); });
 			mouse.bind('f', function () { c.GUI.SetFullscreen({"fullscreen":"toggle"}); });
 			dumpToConsole("initialized keyboard bindings");
 		},

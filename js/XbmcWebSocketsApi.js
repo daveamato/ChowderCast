@@ -22,7 +22,7 @@ Xbmc.WebSocketsApi = function(options) {
 	var _settings = _extend({
 		host: window.location.host || 'localhost'
 		,port: '9090'
-		,autoRetry: true
+		,autoRetry: false
 		,retryInterval: 10000 // number of milliseconds to wait before retrying the connection after a dropout
 		,onConnected: function() {_debug('XBMC Web Sockets Connected');}
 		,onDisconnected: function() {_debug('XBMC Web Sockets Connected');}
