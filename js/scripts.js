@@ -4,7 +4,7 @@
 /* global Hammer */
 var chowder = {}, c,
 	onlineStatus = false,
-	defaulthost = '192.168.1.115',
+	defaulthost = 'androidtv',
 	nowPlayingData = {}, systemEventData = {},
 	trackpadListener, mouse = new Mousetrap();
 var is_touch_device = 'ontouchstart' in document.documentElement;
@@ -27,9 +27,7 @@ $(document).ready(function () {
 });
 
 
-/*		METHODS		*/
-
-
+/* METHODS */
 chowder = {
 	settings: {
 		save: function () {
@@ -96,7 +94,6 @@ chowder = {
 				onlineStatus = true;
 				chowder.setStatus("online", "status-online");
 				chowder.bindInputEvents();
-				/*chowder.bindListeners();*/
 			},
 			onOffline: function () {
 				window.dumpToConsole('XBMC Offline');
@@ -107,36 +104,32 @@ chowder = {
 	},
 	bindListeners: function() {
 		c.subscribe('Player.OnPlay', function(data) {
-			console.log("Playing", data||{});
+            dumpToConsole('Playing: ' + data||{});
 		});
 		
 		c.subscribe('Player.OnStop', function(data) {
-			console.log("Stopped", data||{});;
+			dumpToConsole('Stopped: ' + data||{});
 		});
 		
 		c.subscribe('Player.OnPause', function(data) {
-			console.log("Paused", data||{});
+			dumpToConsole('Paused: ' + data||{});
 		});
 
 		c.subscribe('Player.GetActivePlayers', function(data) {
-			console.log("Got Active Players", data);
+			dumpToConsole('GetActivePlayers: ' + data||{});
 			var r = data.result[0];
 			if (r.type = 'video') {
 				chowder.send_msg('Player.GetItem', {
 					"properties": ["file", "streamdetails"],
 					"playerid": r.playerid,
 				});
-				console.log("Playing: ", r);
+				dumpToConsole('Playing: ' + r);
 			}
 		});
 		
 		c.subscribe('Player.GetItem', function(data) {
-			console.log("GotItem", data||{});
 			var r = data.result.item;
-			/*console.log("Playing Video", r.label);
-			console.log("File", r.file);*/
-
-			console.log("streamdetails: " + data.result.item.streamdetails.video[0]);
+			dumpToConsole("GotItem: " + data.result.item.streamdetails.video[0]);
 		});
 	},
 	bindInputEvents: function() {
@@ -152,10 +145,6 @@ chowder = {
 				c.Input.SendText({"text": t, "done": false});
 			}
 		});
-
-		/*
-		c.subscribe('Input.OnInputFinished', function(data) {});
-		*/
 	},
 	bindKeyEvents: function (d) {
 		dumpToConsole("keypress", d);
