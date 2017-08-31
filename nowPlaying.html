@@ -18,7 +18,13 @@
 </head>
 <body>
 <script language="javascript" type="text/javascript">
-    var ws = new WebSocket('ws://192.168.1.105:9090/jsonrpc');
+    var defIp = '192.168.1.247';
+
+    if(window.location.hash) {
+        defIp = location.hash.replace(/^#/, '');
+    }
+
+    var ws = new WebSocket('ws://' + defIp + ':9090/jsonrpc');
     ws.onopen = function (event) {
         send_message("Player.GetActivePlayers");
     }
