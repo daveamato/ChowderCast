@@ -18,7 +18,18 @@
 </head>
 <body>
 <script language="javascript" type="text/javascript">
-    var ws = new WebSocket('ws://192.168.1.105:9090/jsonrpc');
+	var isHash = function isHash() {
+		return (document.location.hash !== "");
+	};
+	
+	var ws = {};
+
+	if (isHash) {
+		ws = new WebSocket('ws://' + document.location.hash.substring(1) + ':9090/jsonrpc');
+	} else {
+		ws = new WebSocket('ws://localhost:9090/jsonrpc');
+	}
+
     ws.onopen = function (event) {
         send_message("Player.GetActivePlayers");
     }

@@ -288,6 +288,10 @@ $(function () {
 	$(".homeButton").on("click", function() {
 		c.Input.Home();
 	});
+
+	$(".settingsButton").on("click", function() {
+		c.GUI.ActivateWindow({"window":"settings"});
+	});
 	
 	$(".infoButton").on("click", function() {
 		c.Input.Info();
