@@ -235,19 +235,19 @@ $(function () {
 		window.location.reload();
 	});
 
-	$('a[href=#remote]').on('shown.bs.tab', function (e) {
+	$("a[href='#remote']").on("shown.bs.tab", function (e) {
 		mouse.unpause();
 	});
 
-	$('a[href=#remote]').on('hidden.bs.tab', function (e) {
+	$("a[href='#remote']").on("hidden.bs.tab", function (e) {
 		mouse.pause();
 	});
 
-	$("#saveButton").on("click", function () {
+	$("#saveButton").click(function () {
 		chowder.settings.save();
 	});
 
-	$("#castButton").on("click", function () {
+	$("#castButton").click(function () {
 		var urlElement, castbtn, castStatus, urlval, i = {};		
 		urlElement = $("#castUrl");
 		castbtn = $(this);
@@ -274,39 +274,39 @@ $(function () {
 	});
 
 
-	$(".homeButton").on("click", function() {
+	$(".homeButton").click(function() {
 		c.Input.Home();
 	});
 
-	$(".settingsButton").on("click", function() {
+	$(".settingsButton").click(function() {
 		c.GUI.ActivateWindow({"window":"settings"});
 	});
 	
-	$(".infoButton").on("click", function() {
+	$(".infoButton").click(function() {
 		c.Input.Info();
 	});
 
-	$(".fullscreenButton").on("click", function() {
+	$(".fullscreenButton").click(function() {
 		c.GUI.SetFullscreen({"fullscreen":"toggle"});
 	});
 	
 	
-	$(".playButton").on("click", function () {
+	$(".playButton").click(function () {
 		c.Player.PlayPause({ "playerid": 1 });
 	});
 
-	$(".stopButton").on("click", function () {
+	$(".stopButton").click(function () {
 		c.Player.Stop({ "playerid": 1 });
 	});
 
-	$(".status").on("click", function () {
-		$('a[href=#settings]').parent('li').toggle();
+	$(".status").click(function () {
+		$("a[href='#settings']").parent("li").toggle();
 	});
 
-	$(".stepForward").on("click", function() {
+	$(".stepForward").click(function() {
 		c.Input.ExecuteAction({"action": "stepforward"});
 	});
-	$(".stepBack").on("click", function() {
+	$(".stepBack").click(function() {
 		c.Input.ExecuteAction({"action": "stepback"});
 	})
 

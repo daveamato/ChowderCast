@@ -4,8 +4,8 @@ Xbmc.CachedQueryController = function(apiController, options) {
 	var self = this;
 	
 	var _settings = _extend({
-		defaultCache: 'sess' // perm, sess, none
-		,permCacheDur: 1 // permanent cache duration IN DAYS (used unless expires is specified)
+		defaultCache: 'perm' // perm, sess, none
+		,permCacheDur: 7 // permanent cache duration IN DAYS (used unless expires is specified)
 		,sessCacheDur: 1 // session cache duration IN MINUTES (used unless expires is specified)
 	},options || {});
 
